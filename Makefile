@@ -39,3 +39,8 @@ fclean: clean
 			${PRINTF_NAME} ${SERVER_NAME} ${CLIENT_NAME}
 
 re: fclean all
+
+git:
+	git add .
+	git commit -m "make commit"
+	git push
