@@ -6,7 +6,7 @@
 /*   By: welyousf <welyousf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 10:42:14 by welyousf          #+#    #+#             */
-/*   Updated: 2024/05/04 14:49:53 by welyousf         ###   ########.fr       */
+/*   Updated: 2024/05/04 19:17:27 by welyousf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void    print_pid(void)
     ft_printf("-------------- PID: %d ---------------\n", pid);
 }
 
-void handel_sig1(int *c, int *POW)
+void handel_sig1(int *c, int *POW, int **len)
 {
     int i;
     int num;
@@ -45,20 +45,32 @@ void handel_sig1(int *c, int *POW)
     }
     if (*POW == 8)
     {
+        if (*c == '\0')
+        {
+            ft_printf("\nback slash arived\n");
+            send_back(cl_pid[2], cl_pid[0]);
+        }
         ft_printf("%c", *c);
         *POW = 0;
         *c = 0;
+        *(*len + 2) += 1;
     }
 }
 
-void handel_sig2(int *c, int *POW)
+void handel_sig2(int *c, int *POW, int **len)
 {
     *POW += 1;
     if (*POW == 8)
     {
+        if (*c == '\0')
+        {
+            ft_printf("\nback slash arived\n");
+            send_back(cl_pid[2], cl_pid[0]);
+        }
         ft_printf("%c", *c);
         *POW = 0;
         *c = 0;
+        *(*len + 2) += 1;
     }
 }
 
@@ -74,6 +86,27 @@ void    check_pid(int pid, int *pids)
     }
     else
         pids[1] = pid;
+}
+
+void    send_back(int len, int pid)
+{
+    int i;
+
+    i = 1;
+    while (i < 32)
+    {
+        if ((len >> i) & 1)
+        {
+            kill(pid, SIGUSR1);
+            usleep(100);
+        }
+        else
+        {
+            kill(pid, SIGUSR2);
+            usleep(100);
+        }
+        i++;
+    }
 }
 
 void    handel_sig(int   x, siginfo_t   *info, void *ptr)
@@ -92,9 +125,7 @@ void    handel_sig(int   x, siginfo_t   *info, void *ptr)
             cl_pid[0] = info->si_pid;
             cl_pid[1] = info->si_pid;
         }
-        handel_sig1(&c, &POW);
-        // kill(info->si_pid, SIGUSR1);
-        // usleep(100);
+        handel_sig1(&c, &POW, &cl_pid);
     }
     else if (x == SIGUSR2)
     {
@@ -106,8 +137,7 @@ void    handel_sig(int   x, siginfo_t   *info, void *ptr)
             cl_pid[1] = info->si_pid;
 
         }
-        handel_sig2(&c, &POW);
-        // kill(info->si_pid, SIGUSR2);
-        // usleep(100);
+        handel_sig2(&c, &POW, &cl_pid);
     }
+    // ft_printf("len == %d\n", cl_pid[2]);
 }

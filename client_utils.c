@@ -6,11 +6,13 @@
 /*   By: welyousf <welyousf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 10:46:27 by welyousf          #+#    #+#             */
-/*   Updated: 2024/05/04 14:50:05 by welyousf         ###   ########.fr       */
+/*   Updated: 2024/05/04 19:13:13 by welyousf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
+
+extern int len;
 
 int	ft_atoi(const char *str)
 {
@@ -36,18 +38,6 @@ int	ft_atoi(const char *str)
 	return (result * sign);
 }
 
-// void	f(int x)
-// {
-// 	if (x ==  SIGUSR1)
-// 	{
-// 		ft_printf("SIGUSR1\n");
-// 	}
-// 	else
-// 	{
-// 		ft_printf("SIGUSR2\n");
-// 	}
-// }
-
 void    send_char(unsigned char  c, int pid)
 {
     int i;
@@ -58,25 +48,39 @@ void    send_char(unsigned char  c, int pid)
         if ((c >> i) & 1)
         {
             kill(pid, SIGUSR1);
-            usleep(150);
-			// while (1)
-			// {
-			// 	if (signal(SIGUSR1, f))
-			// 		break;
-			// 	sleep(1);
-			// }
+            usleep(100);
         }
         else
         {
             kill(pid, SIGUSR2);
-            usleep(150);
-			// while (1)
-			// {
-			// 	if (signal(SIGUSR2, f))
-			// 		break;
-			// 	sleep(1);
-			// }
+            usleep(100);
         }
         i++;
+    }
+}
+
+void	handel_sig1(int *num)
+{
+	(void)num;
+	ft_printf("1");
+}
+
+void	handel_sig2(int *num)
+{
+	(void)num;
+	ft_printf("0");
+	return ;
+}
+
+void    func(int sig)
+{
+    static int num;
+    if (sig == SIGUSR1)
+    {
+        handel_sig1(&num);
+    }
+    else
+    {
+        handel_sig2(&num);
     }
 }
