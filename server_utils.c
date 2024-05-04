@@ -6,7 +6,7 @@
 /*   By: welyousf <welyousf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 10:42:14 by welyousf          #+#    #+#             */
-/*   Updated: 2024/05/04 14:37:03 by welyousf         ###   ########.fr       */
+/*   Updated: 2024/05/04 14:49:53 by welyousf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ void    handel_sig(int   x, siginfo_t   *info, void *ptr)
             cl_pid[1] = info->si_pid;
         }
         handel_sig1(&c, &POW);
-        kill(info->si_pid, SIGUSR1);
-        usleep(100);
+        // kill(info->si_pid, SIGUSR1);
+        // usleep(100);
     }
     else if (x == SIGUSR2)
     {
@@ -107,7 +107,7 @@ void    handel_sig(int   x, siginfo_t   *info, void *ptr)
 
         }
         handel_sig2(&c, &POW);
-        kill(info->si_pid, SIGUSR2);
-        usleep(100);
+        // kill(info->si_pid, SIGUSR2);
+        // usleep(100);
     }
 }

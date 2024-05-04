@@ -6,7 +6,7 @@
 /*   By: welyousf <welyousf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 10:46:27 by welyousf          #+#    #+#             */
-/*   Updated: 2024/05/04 14:46:46 by welyousf         ###   ########.fr       */
+/*   Updated: 2024/05/04 14:50:05 by welyousf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,17 @@ int	ft_atoi(const char *str)
 	return (result * sign);
 }
 
-void	f(int x)
-{
-	if (x ==  SIGUSR1)
-	{
-		ft_printf("SIGUSR1\n");
-	}
-	else
-	{
-		ft_printf("SIGUSR2\n");
-	}
-}
+// void	f(int x)
+// {
+// 	if (x ==  SIGUSR1)
+// 	{
+// 		ft_printf("SIGUSR1\n");
+// 	}
+// 	else
+// 	{
+// 		ft_printf("SIGUSR2\n");
+// 	}
+// }
 
 void    send_char(unsigned char  c, int pid)
 {
@@ -59,23 +59,23 @@ void    send_char(unsigned char  c, int pid)
         {
             kill(pid, SIGUSR1);
             usleep(150);
-			while (1)
-			{
-				if (signal(SIGUSR1, f))
-					break;
-				sleep(1);
-			}
+			// while (1)
+			// {
+			// 	if (signal(SIGUSR1, f))
+			// 		break;
+			// 	sleep(1);
+			// }
         }
         else
         {
             kill(pid, SIGUSR2);
             usleep(150);
-			while (1)
-			{
-				if (signal(SIGUSR2, f))
-					break;
-				sleep(1);
-			}
+			// while (1)
+			// {
+			// 	if (signal(SIGUSR2, f))
+			// 		break;
+			// 	sleep(1);
+			// }
         }
         i++;
     }
