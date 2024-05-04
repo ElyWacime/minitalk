@@ -1,5 +1,5 @@
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror
 PRINTF_CFILES = ./ft_printf/ft_printf.c ./ft_printf/ft_utils.c ./ft_printf/ft_utils2.c ./ft_printf/ft_utils3.c
 PRINTF_OBJ = $(PRINTF_CFILES:.c=.o)
 PRINTF_NAME = libftprintf.a
@@ -17,8 +17,8 @@ all: ${PRINTF_NAME} ${SERVER_NAME} ${SERVER_PROG}\
 		${CLIENT_NAME} ${CLIENT_PROG}
 
 debug:
-	gcc ${CFLAGS} ${PRINTF_CFILES} ${CLIENT_CFILES} -o client_debug
-	gcc ${CFLAGS} ${PRINTF_CFILES} ${SERVER_CFILES} -o server_debug
+	gcc ${CFLAGS} -g -fsanitize=address ${PRINTF_CFILES} ${CLIENT_CFILES} -o client_debug
+	gcc ${CFLAGS} -g -fsanitize=address ${PRINTF_CFILES} ${SERVER_CFILES} -o server_debug
 
 ${PRINTF_NAME}: ${PRINTF_OBJ}
 	ar rcs ${PRINTF_NAME} ${PRINTF_OBJ}

@@ -6,13 +6,12 @@
 /*   By: welyousf <welyousf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 10:42:14 by welyousf          #+#    #+#             */
-/*   Updated: 2024/05/04 13:25:03 by welyousf         ###   ########.fr       */
+/*   Updated: 2024/05/04 14:37:03 by welyousf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-// extern int POW;
 extern int  *cl_pid;
 
 void    print_pid(void)
@@ -84,16 +83,18 @@ void    handel_sig(int   x, siginfo_t   *info, void *ptr)
 
     (void)ptr;
     check_pid(info->si_pid, cl_pid);
-    // ft_printf("%d\t%d\n", cl_pid[0], cl_pid[1]);
     if (x == SIGUSR1)
     {
         if (cl_pid[0] != cl_pid[1])
         {
             c = 0;
             POW = 0;
+            cl_pid[0] = info->si_pid;
+            cl_pid[1] = info->si_pid;
         }
-        // ft_printf("%d\t%d\n", cl_pid[0], cl_pid[1]);
         handel_sig1(&c, &POW);
+        kill(info->si_pid, SIGUSR1);
+        usleep(100);
     }
     else if (x == SIGUSR2)
     {
@@ -101,7 +102,12 @@ void    handel_sig(int   x, siginfo_t   *info, void *ptr)
         {
             c = 0;
             POW = 0;
+            cl_pid[0] = info->si_pid;
+            cl_pid[1] = info->si_pid;
+
         }
         handel_sig2(&c, &POW);
+        kill(info->si_pid, SIGUSR2);
+        usleep(100);
     }
 }
