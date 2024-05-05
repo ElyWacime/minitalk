@@ -6,7 +6,7 @@
 /*   By: welyousf <welyousf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 18:42:15 by welyousf          #+#    #+#             */
-/*   Updated: 2024/05/04 18:56:08 by welyousf         ###   ########.fr       */
+/*   Updated: 2024/05/05 13:18:37 by welyousf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int main(int    ac, char    *av[])
     struct sigaction    sa;
     
     (void)av;
-    cl_pid = malloc(sizeof(int) * 3);
+    cl_pid = malloc(sizeof(int) * 2);
     sa.sa_sigaction = handel_sig;
     if (ac != 1)
     {

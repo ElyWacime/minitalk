@@ -6,7 +6,7 @@
 /*   By: welyousf <welyousf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 10:46:27 by welyousf          #+#    #+#             */
-/*   Updated: 2024/05/04 19:13:13 by welyousf         ###   ########.fr       */
+/*   Updated: 2024/05/05 13:25:07 by welyousf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,15 +72,13 @@ void	handel_sig2(int *num)
 	return ;
 }
 
-void    func(int sig)
+void    func(int sig, siginfo_t *info, void *ptr)
 {
-    static int num;
+    (void)info;
+    (void)ptr;
     if (sig == SIGUSR1)
     {
-        handel_sig1(&num);
-    }
-    else
-    {
-        handel_sig2(&num);
+        ft_printf("Messege send succesfuly!\n");
+        exit(1);
     }
 }
