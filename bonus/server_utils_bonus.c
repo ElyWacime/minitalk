@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server_utils.c                                     :+:      :+:    :+:   */
+/*   server_utils_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: welyousf <welyousf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 10:42:14 by welyousf          #+#    #+#             */
-/*   Updated: 2024/05/06 13:20:23 by welyousf         ###   ########.fr       */
+/*   Updated: 2024/05/06 13:03:10 by welyousf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minitalk.h"
+#include "minitalk_bonus.h"
 
 extern int	*g_cl_pid;
 
@@ -30,9 +30,14 @@ void	handel_sig1(int *c, int *pow)
 	}
 	if (*pow == 8)
 	{
-		write(1, (char *)c, 1);
-		*pow = 0;
-		*c = 0;
+		if (*c == '\0')
+			kill(g_cl_pid[0], SIGUSR1);
+		else
+		{
+			write(1, (char *)c, 1);
+			*pow = 0;
+			*c = 0;
+		}
 	}
 }
 
@@ -41,9 +46,14 @@ void	handel_sig2(int *c, int *pow)
 	*pow += 1;
 	if (*pow == 8)
 	{
-		write(1, (char *)c, 1);
-		*pow = 0;
-		*c = 0;
+		if (*c == '\0')
+			kill(g_cl_pid[0], SIGUSR1);
+		else
+		{
+			write(1, (char *)c, 1);
+			*pow = 0;
+			*c = 0;
+		}
 	}
 }
 
