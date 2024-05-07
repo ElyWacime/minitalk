@@ -73,6 +73,8 @@ cleanbs:
 fcleanbs: cleanbs
 	rm -rf ${SERVERBS_PROG} ${CLIENTBS_PROG}\
 			${PRINTF_NAME} ${SERVERBS_NAME} ${CLIENTBS_NAME}
+
+rebs: cleanbs bonus
 ######## for bonus ########:
 
 re: fclean all

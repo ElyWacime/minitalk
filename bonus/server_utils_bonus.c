@@ -6,7 +6,7 @@
 /*   By: welyousf <welyousf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 10:42:14 by welyousf          #+#    #+#             */
-/*   Updated: 2024/05/06 13:03:10 by welyousf         ###   ########.fr       */
+/*   Updated: 2024/05/07 13:06:16 by welyousf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern int	*g_cl_pid;
 
-void	handel_sig1(int *c, int *pow)
+void	handel_sig1(int *c, int *pow, int cl_pid)
 {
 	int	i;
 	int	num;
@@ -31,7 +31,7 @@ void	handel_sig1(int *c, int *pow)
 	if (*pow == 8)
 	{
 		if (*c == '\0')
-			kill(g_cl_pid[0], SIGUSR1);
+			kill(cl_pid, SIGUSR1);
 		else
 		{
 			write(1, (char *)c, 1);
@@ -41,13 +41,13 @@ void	handel_sig1(int *c, int *pow)
 	}
 }
 
-void	handel_sig2(int *c, int *pow)
+void	handel_sig2(int *c, int *pow, int cl_pid)
 {
 	*pow += 1;
 	if (*pow == 8)
 	{
 		if (*c == '\0')
-			kill(g_cl_pid[0], SIGUSR1);
+			kill(cl_pid, SIGUSR1);
 		else
 		{
 			write(1, (char *)c, 1);
@@ -75,27 +75,33 @@ void	reset_in_casse_failure(int *c, int *cl_pid, siginfo_t *info, int *pow)
 {
 	*c = 0;
 	*pow = 0;
-	cl_pid[0] = info->si_pid;
-	cl_pid[1] = info->si_pid;
+	*cl_pid = info->si_pid;
+}
+
+void	handel_pid(int *cl_pid, int current_pid)
+{
+	if (*cl_pid == 0)
+		*cl_pid = current_pid;
 }
 
 void	handel_sig(int x, siginfo_t *info, void *ptr)
 {
 	static int	c;
 	static int	pow;
-
+	static int	cl_pid;
+	
 	(void)ptr;
-	check_pid(info->si_pid, g_cl_pid);
+	handel_pid(&cl_pid, info->si_pid);
 	if (x == SIGUSR1)
 	{
-		if (g_cl_pid[0] != g_cl_pid[1])
-			reset_in_casse_failure(&c, g_cl_pid, info, &pow);
-		handel_sig1(&c, &pow);
+		if (cl_pid != info->si_pid)
+			reset_in_casse_failure(&c, &cl_pid, info, &pow);
+		handel_sig1(&c, &pow, cl_pid);
 	}
 	else if (x == SIGUSR2)
 	{
-		if (g_cl_pid[0] != g_cl_pid[1])
-			reset_in_casse_failure(&c, g_cl_pid, info, &pow);
-		handel_sig2(&c, &pow);
+		if (cl_pid != info->si_pid)
+			reset_in_casse_failure(&c, &cl_pid, info, &pow);
+		handel_sig2(&c, &pow, cl_pid);
 	}
 }
