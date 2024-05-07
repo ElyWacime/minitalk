@@ -6,13 +6,11 @@
 /*   By: welyousf <welyousf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 10:42:14 by welyousf          #+#    #+#             */
-/*   Updated: 2024/05/07 13:12:16 by welyousf         ###   ########.fr       */
+/*   Updated: 2024/05/07 13:13:53 by welyousf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
-
-// extern int	*g_cl_pid;
 
 void	handel_sig1(int *c, int *pow)
 {

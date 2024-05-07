@@ -6,13 +6,11 @@
 /*   By: welyousf <welyousf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 10:42:14 by welyousf          #+#    #+#             */
-/*   Updated: 2024/05/07 13:13:03 by welyousf         ###   ########.fr       */
+/*   Updated: 2024/05/07 13:14:00 by welyousf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk_bonus.h"
-
-// extern int	*g_cl_pid;
 
 void	handel_sig1(int *c, int *pow, int cl_pid)
 {
