@@ -6,13 +6,13 @@
 /*   By: welyousf <welyousf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 10:42:14 by welyousf          #+#    #+#             */
-/*   Updated: 2024/05/07 13:06:16 by welyousf         ###   ########.fr       */
+/*   Updated: 2024/05/07 13:13:03 by welyousf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk_bonus.h"
 
-extern int	*g_cl_pid;
+// extern int	*g_cl_pid;
 
 void	handel_sig1(int *c, int *pow, int cl_pid)
 {
@@ -57,20 +57,6 @@ void	handel_sig2(int *c, int *pow, int cl_pid)
 	}
 }
 
-void	check_pid(int pid, int *pids)
-{
-	static int	cnt;
-
-	if (cnt == 0)
-	{
-		pids[0] = pid;
-		pids[1] = pid;
-		cnt += 1;
-	}
-	else
-		pids[1] = pid;
-}
-
 void	reset_in_casse_failure(int *c, int *cl_pid, siginfo_t *info, int *pow)
 {
 	*c = 0;
@@ -89,7 +75,7 @@ void	handel_sig(int x, siginfo_t *info, void *ptr)
 	static int	c;
 	static int	pow;
 	static int	cl_pid;
-	
+
 	(void)ptr;
 	handel_pid(&cl_pid, info->si_pid);
 	if (x == SIGUSR1)

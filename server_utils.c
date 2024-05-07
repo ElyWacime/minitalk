@@ -6,13 +6,13 @@
 /*   By: welyousf <welyousf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 10:42:14 by welyousf          #+#    #+#             */
-/*   Updated: 2024/05/07 13:01:06 by welyousf         ###   ########.fr       */
+/*   Updated: 2024/05/07 13:12:16 by welyousf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-extern int	*g_cl_pid;
+// extern int	*g_cl_pid;
 
 void	handel_sig1(int *c, int *pow)
 {
@@ -65,7 +65,7 @@ void	handel_sig(int x, siginfo_t *info, void *ptr)
 	static int	c;
 	static int	pow;
 	static int	cl_pid;
-	
+
 	(void)ptr;
 	handel_pid(&cl_pid, info->si_pid);
 	if (x == SIGUSR1)
